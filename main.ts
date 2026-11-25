@@ -21,6 +21,10 @@ function main(): void {
     );
     process.exit(1);
   }
+  if (!/^[\x00-\x7F]*$/.test(ENTRY)) {
+    console.error("entry rejected: entry must be ASCII only");
+    process.exit(1);
+  }
   const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
   mkdirSync(outDir, { recursive: true });
   writeFileSync(join(outDir, "entry.txt"), ENTRY, "utf8");
